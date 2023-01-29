@@ -1,34 +1,85 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import './App.css'
+import React, { useState } from "react";
+import "./App.css";
 
-function App() {
-  const [count, setCount] = useState(0)
-
-  return (
-    <div className="App">
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src="/vite.svg" className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://reactjs.org" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </div>
-  )
+interface LeftType {
+  number: number;
 }
 
-export default App
+interface RightType {
+  number: number;
+  onIncrease: () => void;
+}
+
+const App = () => {
+  const [number, setNumber] = useState(1);
+
+  return (
+    <div id="container">
+      <h1>Root : {number}</h1>
+      <div id="grid">
+        <Left1 number={number} />
+        <Right1 number={number} onIncrease={() => setNumber(number + 1)} />
+      </div>
+    </div>
+  );
+};
+
+const Left1: React.FC<LeftType> = ({ number }) => {
+  return (
+    <div>
+      <h1>Left1 : {number}</h1>
+      <Left2 number={number} />
+    </div>
+  );
+};
+
+const Left2: React.FC<LeftType> = ({ number }) => {
+  return (
+    <div>
+      <h1>Left2 : {number}</h1>
+      <Left3 number={number} />
+    </div>
+  );
+};
+
+const Left3: React.FC<LeftType> = ({ number }) => {
+  return (
+    <div>
+      <h1>Left3 : {number}</h1>
+    </div>
+  );
+};
+
+const Right1: React.FC<RightType> = ({ number, onIncrease }) => {
+  return (
+    <div>
+      <h1>Right1 : {number}</h1>
+      <Right2 number={number} onIncrease={onIncrease} />
+    </div>
+  );
+};
+
+const Right2: React.FC<RightType> = ({ number, onIncrease }) => {
+  return (
+    <div>
+      <h1>Right2 : {number}</h1>
+      <Right3 number={number} onIncrease={onIncrease} />
+    </div>
+  );
+};
+
+const Right3: React.FC<RightType> = ({ number, onIncrease }) => {
+  return (
+    <div>
+      <h1>Right3 : {number}</h1>
+      <button
+        onClick={() => {
+          onIncrease();
+        }}
+      >
+        +
+      </button>
+    </div>
+  );
+};
+export default App;
